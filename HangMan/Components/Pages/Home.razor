@@ -15,6 +15,12 @@
             <h1>A word is<br />waiting <em>for you.</em></h1>
             <p class="intro">Find the hidden word, one letter at a time.<br />You have six chances. Make them count.</p>
 
+            <label class="theme-picker">WORD THEME
+                <select value="@_theme.Name" @onchange="ChangeTheme" aria-label="Choose a word theme">
+                    @foreach (var theme in WordThemes.All) { <option value="@theme.Name">@theme.Name</option> }
+                </select>
+            </label>
+
             <div class="word-area" aria-live="polite" aria-label="Hidden word">
                 @foreach (var (letter, index) in WordSlots.Select((letter, index) => (letter, index)))
                 {
@@ -80,8 +86,8 @@
 </main>
 
 @code {
-    private static readonly string[] Words = ["WELCOME", "HANGMAN", "OLLIE", "LOSER", "IDEA", "WELL", "JOKE", "HOLD", "JOINING", "ROOK"];
-    private Game _game = new(Words[Random.Shared.Next(Words.Length)], 6);
+    private WordTheme _theme = WordThemes.All[0];
+    private Game _game = new(WordThemes.All[0].Words[Random.Shared.Next(WordThemes.All[0].Words.Length)], 6);
     private readonly HashSet<char> _guessed = [];
     private string _message = "";
     private bool _lastCorrect;
@@ -100,10 +106,17 @@
         _message = _lastCorrect ? $"Yes! {letter} is in the word." : $"No {letter} this time.";
     }
 
+    private void ChangeTheme(ChangeEventArgs args)
+    {
+        _theme = WordThemes.Get(args.Value?.ToString() ?? "");
+        NewGame();
+    }
+
     private void NewGame()
     {
-        var next = Words[Random.Shared.Next(Words.Length)];
-        if (Words.Length > 1 && next == _game.Answer) next = Words[(Array.IndexOf(Words, next) + 1) % Words.Length];
+        var words = _theme.Words;
+        var next = words[Random.Shared.Next(words.Length)];
+        if (words.Length > 1 && next == _game.Answer) next = words[(Array.IndexOf(words, next) + 1) % words.Length];
         _game = new Game(next, 6);
         _guessed.Clear(); _wrong = 0; _message = ""; _lastCorrect = false;
     }
