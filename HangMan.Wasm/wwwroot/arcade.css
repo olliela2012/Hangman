@@ -117,6 +117,8 @@ body {
 }
 .coughing-body { transform-box: view-box; transform-origin: 158px 185px; animation: cough-wiggle .62s ease-in-out infinite; }
 .cough-face { stroke-width: 2.8; }
+.happy-face { stroke-width: 2.8; stroke-linecap: round; animation: smile-pop .35s ease-out both; }
+.happy-blush { fill: #ff8f9a; opacity: .75; }
 .splutter { fill: #35aeba; stroke: #fff; stroke-width: 1.5; stroke-linejoin: round; animation: splutter-pop .62s ease-in-out infinite; }
 .rescued-body { transform-box: view-box; transform-origin: 158px 185px; animation: rescued-climb 1.8s cubic-bezier(.22, .74, .32, 1) both; }
 .dead-face { stroke: #d94f54; stroke-width: 3.5; stroke-linecap: round; }
@@ -158,6 +160,12 @@ body {
     45% { opacity: 1; transform: scale(1.1) translate(3px, -2px); }
 }
 
+@keyframes smile-pop {
+    0% { opacity: 0; transform: scale(.75); transform-origin: 158px 116px; }
+    70% { opacity: 1; transform: scale(1.12); transform-origin: 158px 116px; }
+    100% { opacity: 1; transform: scale(1); transform-origin: 158px 116px; }
+}
+
 @keyframes rescued-climb {
     0% { transform: translate(0, 0) rotate(0); }
     18% { transform: translate(-5px, 5px) rotate(-7deg); }
@@ -170,6 +178,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
     .dead-body { animation: none; transform: translateY(11px); }
     .coughing-body, .splutter { animation: none; }
+    .happy-face { animation: none; }
     .rescued-body { animation: none; transform: translate(80px, 58px); }
     .letter-slot.revealed { animation: none; }
 }

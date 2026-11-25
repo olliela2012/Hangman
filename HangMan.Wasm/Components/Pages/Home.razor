@@ -67,6 +67,11 @@
                     {
                         <path class="face-detail dead-face" d="M144 102 L152 110 M152 102 L144 110 M164 102 L172 110 M172 102 L164 110 M149 126 Q158 116 167 126" />
                     }
+                    else if (_game.Won)
+                    {
+                        <path class="face-detail happy-face" d="M143 107 Q148 100 153 107 M163 107 Q168 100 173 107 M147 119 Q158 135 169 119" />
+                        <circle class="happy-blush" cx="138" cy="116" r="4" /><circle class="happy-blush" cx="178" cy="116" r="4" />
+                    }
                     else if (_wrong >= 3 && !_game.Won)
                     {
                         <circle class="face-detail" cx="148" cy="106" r="2.5" /><circle class="face-detail" cx="168" cy="106" r="2.5" />
@@ -76,7 +81,7 @@
                     else
                     {
                         <circle class="face-detail" cx="148" cy="106" r="2.5" /><circle class="face-detail" cx="168" cy="106" r="2.5" />
-                        <path class="face-detail" d="M149 124 Q158 116 167 124" />
+                        <path class="face-detail" d="M149 121 Q158 130 167 121" />
                     }
                 }
                 </g>
