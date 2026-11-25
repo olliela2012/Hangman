@@ -54,7 +54,7 @@
             <div class="card-top"><span>THE GALLOWS</span><span class="attempts">@_wrong <i>/</i> 6 MISSES</span></div>
             <svg class="hangman" viewBox="0 0 420 390" role="img" aria-label="Hangman illustration, @_wrong wrong guesses">
                 <path class="scaffold" d="M62 344 H275 M112 344 V44 H270 V76 M112 95 H158" />
-                <g class="@(_game.OutOfLives ? "dead-body" : "")">
+                <g class="@(_game.OutOfLives ? "dead-body" : _game.Won ? "rescued-body" : _wrong >= 3 ? "coughing-body" : "")">
                 @if (_wrong >= 1) { <circle class="figure" cx="158" cy="111" r="31" /> }
                 @if (_wrong >= 2) { <path class="figure" d="M158 142 V238" /> }
                 @if (_wrong >= 3) { <path class="figure" d="M158 165 L119 204" /> }
@@ -66,6 +66,12 @@
                     @if (_game.OutOfLives)
                     {
                         <path class="face-detail dead-face" d="M144 102 L152 110 M152 102 L144 110 M164 102 L172 110 M172 102 L164 110 M149 126 Q158 116 167 126" />
+                    }
+                    else if (_wrong >= 3 && !_game.Won)
+                    {
+                        <circle class="face-detail" cx="148" cy="106" r="2.5" /><circle class="face-detail" cx="168" cy="106" r="2.5" />
+                        <path class="face-detail cough-face" d="M151 120 Q158 115 165 120 Q165 129 158 129 Q151 129 151 120" />
+                        <path class="splutter" d="M190 102 Q198 108 190 114 Q183 108 190 102 M205 120 Q212 126 205 132 Q198 126 205 120" />
                     }
                     else
                     {
@@ -95,7 +101,7 @@
     private string[] WordSlots => _game.CurrentStatus().Split(' ');
     private HashSet<char> _answerLetters => _game.Answer.ToHashSet();
     private bool IsFinished => _game.Won || _game.OutOfLives;
-    private string Caption => _game.Won ? "A perfect little victory." : _game.OutOfLives ? "This one got away." : _wrong switch { 0 => "Plenty of room for mistakes.", 1 => "A little slip. Keep going.", 2 => "Still in the running.", 3 => "Keep your head in the game.", 4 => "It's getting close now.", 5 => "One last chance…", _ => "" };
+    private string Caption => _game.Won ? (_wrong == 0 ? "You saved me! Thanks for the perfect rescue." : "You saved me—cough—thanks! That was close.") : _game.OutOfLives ? "This one got away." : _wrong switch { 0 => "Plenty of room for mistakes.", 1 => "A little slip. Keep going.", 2 => "Still in the running.", 3 => "Ahem... I'm okay. Keep guessing.", 4 => "Cough, splutter... getting close!", 5 => "Cough! One last chance…", _ => "" };
 
     private void Guess(char letter)
     {
