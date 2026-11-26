@@ -13,6 +13,23 @@ body {
 
 .page-shell { max-width: 1280px; }
 .topbar { border-bottom: 2px solid #dfd8f7; }
+.arcade-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 12px;
+    border: 1px solid #c9bee8;
+    border-radius: 999px;
+    background: #fff;
+    color: #5739b5;
+    font: 500 9px 'DM Mono', monospace;
+    letter-spacing: .7px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background .16s, border-color .16s, transform .16s;
+}
+.arcade-home:hover { background: #eee8ff; border-color: #8862e5; transform: translateY(-1px); }
+.arcade-home:focus-visible { outline: 2px solid #7452e8; outline-offset: 3px; }
 .brand { color: #32265f; letter-spacing: 2.2px; }
 .brand-mark {
     background: #6d4de6;
@@ -184,6 +201,11 @@ body {
 }
 
 @media (max-width: 700px) {
+    .topbar { gap: 10px; }
+    .brand { gap: 8px; font-size: 9px; letter-spacing: 1.2px; }
+    .brand-mark { width: 27px; height: 27px; }
+    .arcade-home { padding: 7px 9px; font-size: 7px; letter-spacing: .45px; }
+    .edition { display: none; }
     .page-shell { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
     .topbar { height: 54px; }
     .game-layout { padding: 12px 0; gap: 12px; }
